@@ -1,2 +1,5 @@
 This is project for first practice of Python
-This File HAS some changes!!!
+стоит смотреть лишь на последние весии файлов:
+interface.py
+bs.py
+
