@@ -64,7 +64,7 @@ def get_coord(size,plr):
         return {'x':-1, 'y':-1 }
 
 
-num_of_ships = 1
+"""num_of_ships = 1
 size = 5
 fl = Field(size)
 #random initialization ships
@@ -90,6 +90,6 @@ while(not fl.is_end()):
     print "Step %s" % i
     fl.display()
 
-print "WIN!"
+print "WIN!"""
 
 
