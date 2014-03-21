@@ -1,8 +1,9 @@
 ﻿from random import randint
 class Field(object):
+    board = []
+    n_ships = 0
     def __init__(self,size):
-        self.board = []
-        for i in range(size):
+        for i in range(0, size):
             self.board.append([0] * size)
         self.size = size
 
@@ -14,12 +15,25 @@ class Field(object):
             st+='\n'
         return st
 
-    def modif(self, c):
+    def reset(self):
+        self.board = []
+        for i in range(0, self.size):
+            self.board.append([0] * self.size)
+        # 0 - пусто
+        # 1 - занято
+        # 2 - подбито
+    def modif(self, c, n):#n -на что меняем
         x = c['x']
         y = c['y']
-        res = self.board[x][y]
-        self.board[x][y] = 2
-        return res
+        was = self.board[x][y]
+        
+        if n == 1 and 0 == was:
+            self.n_ships+=1
+        elif n == 2 and 1 == was:
+            self.n_ships-=1
+        
+        self.board[x][y] = n
+        return was
 
     def display(self):
         res = ''
@@ -32,14 +46,12 @@ class Field(object):
             res+='\n'
         print res
 
-    def is_end(self):
+    def is_empty(self):
         for line in self.board:
             if line.count(1)!=0:
                 return False
         else:
             return True
-
-
 
 def get_user_coord(size):
     y = int(raw_input("Please, input column: "))
@@ -61,35 +73,4 @@ def get_coord(size,plr):
     elif plr == 'i':#human
         return get_user_coord(size)
     else:
-        return {'x':-1, 'y':-1 }
-
-
-"""num_of_ships = 1
-size = 5
-fl = Field(size)
-#random initialization ships
-for i in range(0, num_of_ships):
-    coord = get_coord(size,'r')
-    x = coord['x']
-    y = coord['y']
-    fl.board[x][y] = 1
-i=1
-print "Step %s" % i
-fl.display()
-while(not fl.is_end()):
-    c = get_coord(size,'i')
-    res = fl.modif(c)
-    if res == 2:
-        print "We have shooted this coordinates already! Try other coordintes!"
-        continue
-    elif res == 1:
-        print "You hit!"
-    else:
-        print "You missed."
-    i+=1
-    print "Step %s" % i
-    fl.display()
-
-print "WIN!"""
-
-
+        return {'x':-1, 'y':-1}
