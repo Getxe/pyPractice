@@ -22,7 +22,8 @@ class Field(object):
         # 0 - пусто
         # 1 - занято
         # 2 - подбито
-    def modif(self, c, n):#n -на что меняем
+        # n - на что меняем
+    def modif(self, c, n):
         x = c['x']
         y = c['y']
         was = self.board[x][y]

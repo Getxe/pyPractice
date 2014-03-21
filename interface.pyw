@@ -1,7 +1,6 @@
 # -*- coding: utf-8; -*-
 from Tkinter import *
 from bs import *
-from setups import *
 
 class Btns(object):
     def  __init__(self,size,fr):
