@@ -4,6 +4,7 @@ from bs import *
 from setups import *
 
 class Btns(object):
+    """Our class buttons"""
     def  __init__(self,size,fr):
         self.btns = []
         for i in xrange(0,size):
@@ -16,21 +17,25 @@ class Btns(object):
         self.size = size
 
     def set(self, pram, value):
+        """set param = value to all buttons"""
         for i in range(0,len(self.btns)):
            for j in range(0,len(self.btns[i])):
                 self.btns[i][j][pram] = value
 
     def bind(self,foo):
+        """bind some function foo to all buttons"""
         for i in range(0,len(self.btns)):
            for j in range(0,len(self.btns[i])):
                 self.btns[i][j].bind("<Button-1>", foo)
 
 def btns_disable(btns):
+    """function to disable all buttons in list btns"""
         for i in range(0,len(btns)):
            for j in range(0,len(btns[i])):
                 btns[i][j].config(state = 'disabled', relief=SUNKEN, borderwidth=1)
 
 def btns_show(btns,field):
+    """function to showing where is ships of enemy"""
         for i in range(0,len(btns)):
            for j in range(0,len(btns[i])):
                 if field.board[i][j] == 1:
@@ -39,6 +44,7 @@ def btns_show(btns,field):
 
 
 def newGame():
+    """new game initialization"""
     global fl
     global my_f
     box2.grid_remove()
@@ -54,6 +60,7 @@ def newGame():
     my_btns.set('relief','raised')
     my_btns.bind(add_ship)
     i = num_of_ships
+    #initialization ships of enemy
     while i>0:
         coord = get_rand_coord(size)
         x = coord['x']
@@ -64,6 +71,7 @@ def newGame():
 
 
 def add_ship(event):
+    """function to choose where will stay our ships"""
     global my_f
     grid_info = event.widget.grid_info()
     x = int(grid_info["row"])
@@ -72,7 +80,7 @@ def add_ship(event):
     my_f.modif(c,1)
     my_btns.btns[x][y].config(state = 'disabled', relief=SUNKEN, borderwidth=1, text=u"\u2714")
     if my_f.n_ships==num_of_ships:
-        play()
+        play()#when number our ships == max num ships do play()
 
 
 def play():
@@ -80,6 +88,7 @@ def play():
     global fl
     global box2
     global lb2
+    """show emeny field"""
     box2.grid(row = 2, column = 2)
     lb2.grid(row = 1, column = 2)
     btns_disable(my_btns.btns)
@@ -89,9 +98,11 @@ def play():
     btns1.bind(fire)
 
 def nothing(event):
+    #this funct do nothing
     pass
 
 def fire(event):
+    #обработчик выстрелов
     global fl  
     global btns1
     grid_info = event.widget.grid_info()
@@ -103,7 +114,9 @@ def fire(event):
     btns1.btns[x][y].bind("<Button-1>",nothing)
     if res == 1:
         btns1.btns[x][y].config(text="X")
+    #выстрел компьютера
     bot_fire()
+    #проверка конца игры   
     win = fl.is_empty()
     lose = my_f.is_empty()
     if win:
@@ -115,6 +128,7 @@ def fire(event):
         btns1.bind(nothing)
 
 def bot_fire():
+    """функция для выстрела компьютера"""
     c = get_rand_coord(size)
     my_f.modif(c,2)
     x = c['x']

@@ -1,7 +1,7 @@
 ﻿from random import randint
 class Field(object):
-    board = []
-    n_ships = 0
+    board = []  #наше поле
+    n_ships = 0 #количествл караблей 
     def __init__(self,size):
         for i in range(0, size):
             self.board.append([0] * size)
@@ -16,6 +16,7 @@ class Field(object):
         return st
 
     def reset(self):
+    #функция сброса расположения караблей
         self.board = []
         for i in range(0, self.size):
             self.board.append([0] * self.size)
@@ -24,6 +25,7 @@ class Field(object):
         # 2 - подбито
         # n - на что меняем
     def modif(self, c, n):
+    #изменения значения клетки по координатам
         x = c['x']
         y = c['y']
         was = self.board[x][y]
@@ -37,6 +39,7 @@ class Field(object):
         return was
 
     def display(self):
+        #old---------------------
         res = ''
         for i in self.board:
             for itm in i:
@@ -48,6 +51,7 @@ class Field(object):
         print res
 
     def is_empty(self):
+    #проверка на сушествование целых караблей
         for line in self.board:
             if line.count(1)!=0:
                 return False
@@ -55,6 +59,7 @@ class Field(object):
             return True
 
 def get_user_coord(size):
+    """Получение координат с клавиатуры"""
     y = int(raw_input("Please, input column: "))
     while y<0 or y>size-1:
         y = int(raw_input("This value is incorrect, please, try again: "))
@@ -65,6 +70,7 @@ def get_user_coord(size):
     return coord
 
 def get_rand_coord(size):
+    """Получение случайных координат"""
     coord = {'x':randint(0,size-1),'y':randint(0,size-1)}
     return coord
 
